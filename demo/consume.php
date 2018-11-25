@@ -17,7 +17,7 @@ $callback = function (AMQPMessage $message) {
     // @todo
     echo sprintf(
         "Body: '%s'. Properties: '%s'" . PHP_EOL,
-        json_encode($message->getBody()),
+        $message->getBody(),
         json_encode($message->get_properties())
     );
 };

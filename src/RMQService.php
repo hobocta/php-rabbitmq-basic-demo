@@ -45,14 +45,6 @@ class RMQService
 
         $this->channel = $this->connection->channel();
 
-        $this->channel->queue_declare(
-            $this->queueConfig->getQueue(),
-            $this->queueConfig->isPassive(),
-            $this->queueConfig->isDurable(),
-            $this->queueConfig->isExclusive(),
-            $this->queueConfig->isAutoDelete()
-        );
-
         $this->exchange = sprintf('%s_exchange', $this->queueConfig->getQueue());
 
         $this->channel->exchange_declare(
@@ -60,6 +52,14 @@ class RMQService
             'fanout',
             $this->queueConfig->isPassive(),
             $this->queueConfig->isDurable(),
+            $this->queueConfig->isAutoDelete()
+        );
+
+        $this->channel->queue_declare(
+            $this->queueConfig->getQueue(),
+            $this->queueConfig->isPassive(),
+            $this->queueConfig->isDurable(),
+            $this->queueConfig->isExclusive(),
             $this->queueConfig->isAutoDelete()
         );
 

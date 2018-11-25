@@ -13,7 +13,15 @@ $rmqService = new RMQService($demoRmqConfig->getRmqConnectionConfig(), $demoRmqC
 
 $rmqService->connect();
 
-$message = new AMQPMessage('Body ' . rand(), array('delivery_mode' => 2));
+$messageString = json_encode(array(
+    'title' => 'Random title ' . rand(),
+    'anyData' => rand(),
+));
+
+$message = new AMQPMessage(
+    $messageString,
+    array('delivery_mode' => 2)
+);
 
 $rmqService->publish($message);
 
