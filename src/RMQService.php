@@ -89,7 +89,7 @@ class RMQService
         $this->channel->basic_consume(
             $this->queueConfig->getQueue(),
             $consumerTag,
-            true,
+            false,
             false,
             $this->queueConfig->isExclusive(),
             false,
