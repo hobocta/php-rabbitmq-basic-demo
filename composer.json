@@ -1,0 +1,13 @@
+{
+    "require": {
+        "php-amqplib/php-amqplib": "^2.8"
+    },
+    "config": {
+        "secure-http": false
+    },
+    "autoload": {
+        "psr-4": {
+            "Hobocta\\RMQ\\": "src/"
+        }
+    }
+}
