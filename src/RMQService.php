@@ -8,8 +8,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class RMQService
 {
-    private $connectionConfig;
-    private $queueConfig;
+    private $queueName;
     /**
      * @var AMQPStreamConnection
      */
@@ -23,47 +22,42 @@ class RMQService
     /**
      * RMQService constructor.
      *
-     * @param RMQConnectionConfig $connectionConfig
-     * @param RMQQueueConfig $queueConfig
+     * @param $queueName
      */
-    public function __construct(
-        RMQConnectionConfig $connectionConfig,
-        RMQQueueConfig $queueConfig
-    ) {
-        $this->connectionConfig = $connectionConfig;
-        $this->queueConfig = $queueConfig;
+    public function __construct($queueName) {
+        $this->queueName = $queueName;
     }
 
     public function connect()
     {
         $this->connection = new AMQPStreamConnection(
-            $this->connectionConfig->getHost(),
-            $this->connectionConfig->getPort(),
-            $this->connectionConfig->getUser(),
-            $this->connectionConfig->getPassword()
+            'localhost',
+            5672,
+            'guest',
+            'guest'
         );
 
         $this->channel = $this->connection->channel();
 
-        $this->exchange = sprintf('%s_exchange', $this->queueConfig->getQueue());
+        $this->exchange = sprintf('%s_exchange', $this->queueName);
 
         $this->channel->exchange_declare(
             $this->exchange,
             'fanout',
-            $this->queueConfig->isPassive(),
-            $this->queueConfig->isDurable(),
-            $this->queueConfig->isAutoDelete()
+            false,
+            true,
+            false
         );
 
         $this->channel->queue_declare(
-            $this->queueConfig->getQueue(),
-            $this->queueConfig->isPassive(),
-            $this->queueConfig->isDurable(),
-            $this->queueConfig->isExclusive(),
-            $this->queueConfig->isAutoDelete()
+            $this->queueName,
+            false,
+            true,
+            false,
+            false
         );
 
-        $this->channel->queue_bind($this->queueConfig->getQueue(), $this->exchange);
+        $this->channel->queue_bind($this->queueName, $this->exchange);
     }
 
     public function publish(AMQPMessage $message)
@@ -89,11 +83,11 @@ class RMQService
         $this->channel->basic_qos(null, 1, null);
 
         $this->channel->basic_consume(
-            $this->queueConfig->getQueue(),
+            $this->queueName,
             $consumerTag,
             false,
             false,
-            $this->queueConfig->isExclusive(),
+            false,
             false,
             $callback
         );
