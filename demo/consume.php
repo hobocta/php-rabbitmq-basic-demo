@@ -20,6 +20,10 @@ $callback = function (AMQPMessage $message) {
         $message->getBody(),
         json_encode($message->get_properties())
     );
+
+    /** @var \PhpAmqpLib\Channel\AMQPChannel $channel */
+    $channel = $message->delivery_info['channel'];
+    $channel->basic_ack($message->delivery_info['delivery_tag']);
 };
 
 try {
