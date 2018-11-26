@@ -5,7 +5,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$rmqService = new RMQService('test9');
+$rmqService = new RMQService('test10');
 
 $rmqService->connect();
 
