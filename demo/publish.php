@@ -5,7 +5,9 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$rmqService = new RMQService('hobocta_demo');
+$queueName = 'hobocta_demo';
+
+$rmqService = new RMQService($queueName);
 
 $rmqService->connect();
 
