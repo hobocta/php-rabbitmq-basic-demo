@@ -86,6 +86,8 @@ class RMQService
     {
         register_shutdown_function(array($this, 'close'));
 
+        $this->channel->basic_qos(null, 1, null);
+
         $this->channel->basic_consume(
             $this->queueConfig->getQueue(),
             $consumerTag,
