@@ -10,8 +10,8 @@ $rmqService = new RMQService('test9');
 $rmqService->connect();
 
 $messageString = json_encode(array(
-    'title' => 'Random title ' . rand(),
-    'anyData' => rand(),
+    'title' => 'Random title ' . uniqid(),
+    'timestamp' => time(),
 ));
 
 $message = new AMQPMessage(
