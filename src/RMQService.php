@@ -30,6 +30,7 @@ class RMQService
 
     public function connect()
     {
+        // @todo вынести настройки в конфиг
         $this->connection = new AMQPStreamConnection(
             'localhost',
             5672,
