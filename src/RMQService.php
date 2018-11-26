@@ -73,11 +73,10 @@ class RMQService
     }
 
     /**
-     * @param $consumerTag
      * @param $callback
      * @throws \ErrorException
      */
-    public function consume($consumerTag, $callback)
+    public function consume($callback)
     {
         register_shutdown_function(array($this, 'close'));
 
@@ -85,7 +84,7 @@ class RMQService
 
         $this->channel->basic_consume(
             $this->queueName,
-            $consumerTag,
+            '',
             false,
             false,
             false,

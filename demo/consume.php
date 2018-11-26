@@ -23,7 +23,7 @@ $callback = function (AMQPMessage $message) {
 };
 
 try {
-    $rmqService->consume('consumer8', $callback);
+    $rmqService->consume($callback);
 } catch (ErrorException $e) {
     // @todo logging
     die(sprintf('Exception message: %s (%s:%s)', $e->getMessage(), $e->getFile(), $e->getLine()));
