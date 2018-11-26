@@ -27,7 +27,7 @@ class DemoRmqConfig
             ->setPassive(false)
             ->setDurable(true)
             ->setExclusive(false)
-            ->setAutoDelete(true);
+            ->setAutoDelete(false);
 
         return $queueConfig;
     }
