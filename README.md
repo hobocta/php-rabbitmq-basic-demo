@@ -2,4 +2,4 @@
 
 RabbitMQ usage basic example
 
-[publish](demo/publish.php), [consume](demo.consume.php)
+[publish](demo/publish.php), [consume](demo/consume.php)
